@@ -16,6 +16,7 @@ var gpa = 0;
 
 function handleTr(tr) {
     tds = tr.childNodes
+    if (tds.length < 6) return
     xf = Number(tds[6].innerText)
     total_xf += xf;
     xfjd = Number(tds[24].innerText)
@@ -26,12 +27,15 @@ function queryScore() {
     // 点击查询按钮
     console.log("query score")
     document.getElementById('search_go').click()
+}
 
+function calc() {
     // 获取每科学分绩点
     console.log("calculating GPA...")
     var table = document.getElementById('tabGrid')
     var tbody = table.childNodes[0]
     var trs = tbody.childNodes
+    console.log('total: ' + trs.length)
     trs.forEach(handleTr);
 
     // 计算GPA
@@ -44,7 +48,6 @@ function queryScore() {
     div_result.style = 'text-align: center; font-size: 20px; border-width: 2px; border-style: solid;'
     div_result.innerHTML = '<p>当前总学分: ' + total_xf + '</p><br><p>当前总学分绩点: ' + total_xfjd + '</p><br><p>当前平均学分绩点: ' + gpa + '</p>'
     div_data.appendChild(div_result)
-
 }
 
 (function () {
@@ -52,5 +55,7 @@ function queryScore() {
     console.log("GPACalc")
     console.log("author: Catium2006")
 
-    setTimeout(queryScore, 1000)
+    setTimeout(queryScore, 500)
+    setTimeout(calc, 1000)
+
 })();
